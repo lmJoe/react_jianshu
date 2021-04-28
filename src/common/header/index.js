@@ -10,6 +10,7 @@ import {
   Button,
   SearchWrapper} from './style.js'
 import { CSSTransition } from 'react-transition-group';
+import { actionCreators }  from './store/index';//将当前组件下store引入唯一路径index.js  目的在于引入actionCreators中的操作类型
 const Header = (props) => {
   return (
     <HeaderWrapper>
@@ -52,15 +53,11 @@ const mapDispatchToProps = (dispatch) => {
     //将操作store中数据的方法handleInputFocused写在此处
     handleInputFocused() {
       //写一个action类型 方便在reducer文件中做判断
-      const action = {
-        type:'search_focuse'
-      }
+      const action = actionCreators.searchFocus();
       dispatch(action);
     },
     handleInputBlur() {
-      const action = {
-        type:'search_blur'
-      }
+      const action = actionCreators.searchBlur();
       dispatch(action);
     }
   }
