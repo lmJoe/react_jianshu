@@ -44,7 +44,7 @@ const Header = (props) => {
 const mapStateToProps = (state) => {
   return {
     //此处为store仓库中的focused，将当前state.focused的值映射到mapStateToProps中
-    focused: state.focused
+    focused: state.header.focused
   }
 }
 const mapDispatchToProps = (dispatch) => {
