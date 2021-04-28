@@ -45,7 +45,11 @@ const Header = (props) => {
 const mapStateToProps = (state) => {
   return {
     //此处为store仓库中的focused，将当前state.focused的值映射到mapStateToProps中
-    focused: state.header.focused
+    // focused: state.header.focused,//在项目未引入immutable时
+    //此处state.get('header')为当前state通过组件外的store中使用redux-immutable提供的combineReducers()方法对state已经实现了state成为immutable对象的过程，这是需要通过.get()的方法获取到header
+    //在项目引入immutable后，需要通过get()的方法获取到state中的focused值
+    // focused: state.get('header').get('focused');//此处获取组件中的focused的方法可以使用下面的方法实现
+    focused:state.getIn('header','focused')
   }
 }
 const mapDispatchToProps = (dispatch) => {
