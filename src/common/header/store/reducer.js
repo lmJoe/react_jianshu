@@ -36,7 +36,6 @@ export default ( state = defaultState, action ) => {//此处的defaultState是�
         'list':action.data,
         'totalPage':action.totalPage,
       })
-
     case constants.MOUSE_ENTER:   //将操作类型更改为操作常量
     // const newState = JSON.parse(JSON.stringify(state));//深拷贝
     // //现有的state已是一个immutable对象，使用set对state的值进行操作
