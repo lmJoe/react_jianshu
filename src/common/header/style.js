@@ -101,7 +101,7 @@ export const Button = styled.div`
 `
 export const SearchWrapper = styled.div`
   float:left;
-  overflow:hidden;
+  // overflow:hidden;
   position:relative;
   .iconfont{
     position:absolute;
@@ -118,4 +118,42 @@ export const SearchWrapper = styled.div`
       color:#fff;
     }
   }
+`
+export const SearchInfo = styled.div`
+  position:absolute;
+  top:56px;
+  left:20px;
+  width:230px;
+  padding:20px;
+  background:#fff;
+  // height:150px;
+  box-shadow:0 0 8px rgba(0,0,0,.2);
+`
+export const SearchInfoTitle = styled.div`
+  margi-top:20px;
+  margin-bottom:15px;
+  line-height:20px;
+  font-size:14px;
+  color:#969696;
+  cursor:pointer;
+`
+export const SearchInfoSwitch = styled.span`
+  font-size:13px;
+  color:#969696;
+  float:right;
+`
+export const SearchInfoItem = styled.a`
+  font-size:12px;
+  color:#787878;
+  padding:0 5px;
+  line-height:20px;
+  border:1px solid #ddd;
+  border-radius:3px;
+  display:block;
+  float:left;
+  margin-right:10px;
+  margin-bottom:10px;
+`
+export const SearchInfoList = styled.div`
+  overflow:hidden;
 `

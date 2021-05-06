@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   HeaderWrapper,
@@ -8,38 +8,78 @@ import {
   NavSearch,
   Addition,
   Button,
-  SearchWrapper} from './style.js'
+  SearchInfo,
+  SearchWrapper,
+  SearchInfoSwitch,
+  SearchInfoTitle,
+  SearchInfoItem,
+  SearchInfoList} from './style.js'
 import { CSSTransition } from 'react-transition-group';
 import { actionCreators }  from './store/index';//将当前组件下store引入唯一路径index.js  目的在于引入actionCreators中的操作类型
-const Header = (props) => {
-  return (
-    <HeaderWrapper>
-    <Logo></Logo>
-    <Nav>
-      <Navitem className="left active">首页</Navitem>
-      <Navitem className="left">下载</Navitem>
-      <Navitem className="right">登录</Navitem>
-      <Navitem className="right"><i className="iconfont">&#xe636;</i></Navitem>
-      <SearchWrapper>
-        <CSSTransition
-        in={props.focused}
-        timeout={200}
-        classNames="slide">
-          <NavSearch
-          className={props.focused ? 'focused':''}
-          onFocus={props.handleInputFocused}
-          onBlur={props.handleInputBlur}
-          ></NavSearch>
-        </CSSTransition>
-        <i className={props.focused ? 'focused iconfont':'iconfont'}>&#xe637;</i>
-      </SearchWrapper>
-    </Nav>
-    <Addition>
-      <Button className="writting"><i className="iconfont">&#xe6e5;</i>写文章</Button>
-      <Button className="reg">注册</Button>
-    </Addition>
-  </HeaderWrapper>
-  )
+class Header extends Component {
+  getListArea = () => {
+    const { focused, list, page, mouseIn, totalPage, handleMouseEnter, handleMouseLeave, handleChangePage} = this.props;
+    //此时的list为一个immutable对象，不支持中括号[]
+    const jsList = list.toJS();//使用toJS()方法转换为一个普通的数组
+    const pagelist = [];
+    if(jsList.length){
+      for(let i = ((page-1) * 10);i<page*10;i++){
+        pagelist.push(
+          <SearchInfoItem key={jsList[i]}>{jsList[i]}</SearchInfoItem>
+        )
+      }
+    }
+    if(focused|| mouseIn){
+      return (
+        <SearchInfo 
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        >
+          <SearchInfoTitle>热门搜索
+            <SearchInfoSwitch onClick={()=>{handleChangePage(page,totalPage)}}>换一批</SearchInfoSwitch>
+          </SearchInfoTitle>
+          <SearchInfoList>
+            {pagelist}
+          </SearchInfoList>
+        </SearchInfo>
+      )
+    }else {
+      return null;
+    }
+  }
+  render(){
+    const {focused, handleInputFocused, handleInputBlur} = this.props;
+    return (
+      <HeaderWrapper>
+      <Logo></Logo>
+      <Nav>
+        <Navitem className="left active">首页</Navitem>
+        <Navitem className="left">下载</Navitem>
+        <Navitem className="right">登录</Navitem>
+        <Navitem className="right"><i className="iconfont">&#xe636;</i></Navitem>
+        <SearchWrapper>
+          <CSSTransition
+          in={focused}
+          timeout={200}
+          classNames="slide">
+            <NavSearch
+            className={focused ? 'focused':''}
+            onFocus={handleInputFocused}
+            onBlur={handleInputBlur}
+            ></NavSearch>
+          </CSSTransition>
+          <i className={focused ? 'focused iconfont':'iconfont'}>&#xe637;</i>
+          {/* 此处为判断搜索框聚焦时显示，不聚集不显示 */}
+          {this.getListArea()}
+        </SearchWrapper>
+      </Nav>
+      <Addition>
+        <Button className="writting"><i className="iconfont">&#xe6e5;</i>写文章</Button>
+        <Button className="reg">注册</Button>
+      </Addition>
+    </HeaderWrapper>
+    )
+  }
 }
 //connect接收store的方法
 const mapStateToProps = (state) => {
@@ -48,8 +88,13 @@ const mapStateToProps = (state) => {
     // focused: state.header.focused,//在项目未引入immutable时
     //此处state.get('header')为当前state通过组件外的store中使用redux-immutable提供的combineReducers()方法对state已经实现了state成为immutable对象的过程，这是需要通过.get()的方法获取到header
     //在项目引入immutable后，需要通过get()的方法获取到state中的focused值
-    // focused: state.get('header').get('focused');//此处获取组件中的focused的方法可以使用下面的方法实现
-    focused:state.getIn('header','focused')
+    // focused: state.get('header').get('focused'),//此处获取组件中的focused的方法可以使用下面的方法实现
+    focused:state.getIn(['header','focused']),
+    list:state.getIn(['header','list']),
+    page:state.getIn(['header','page']),
+    mouseIn:state.getIn(['header','mouseIn']),
+    totalPage:state.getIn(['header','totalPage']),
+
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -57,12 +102,30 @@ const mapDispatchToProps = (dispatch) => {
     //将操作store中数据的方法handleInputFocused写在此处
     handleInputFocused() {
       //写一个action类型 方便在reducer文件中做判断
+      //在聚焦时做一个ajax的数据请求，现在使用redux-thunk来代替集中在中间件action.js中做ajax请求
+      //次数在搜索框聚焦时，可以派发一个由actionCreators创建的获取异步数据的action
+      dispatch(actionCreators.getList());//此处的getList()方法在actionCreators.js文件中创建
       const action = actionCreators.searchFocus();
       dispatch(action);
     },
     handleInputBlur() {
       const action = actionCreators.searchBlur();
       dispatch(action);
+    },
+    handleMouseEnter() {
+      const action = actionCreators.mouseEnter();
+      dispatch(action);
+    },
+    handleMouseLeave(){
+      const action = actionCreators.mouseLeave();
+      dispatch(action);
+    },
+    handleChangePage(page,totalPage){
+      if(page<totalPage){
+        dispatch(actionCreators.changePage(page+1));
+      }else{
+        dispatch(actionCreators.changePage(1));
+      }
     }
   }
 }
