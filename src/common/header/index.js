@@ -36,7 +36,13 @@ class Header extends Component {
         onMouseLeave={handleMouseLeave}
         >
           <SearchInfoTitle>热门搜索
-            <SearchInfoSwitch onClick={()=>{handleChangePage(page,totalPage)}}>换一批</SearchInfoSwitch>
+            <SearchInfoSwitch onClick={()=>{handleChangePage(page,totalPage,this.spinIcon)}}>
+              {/* ref={()}获取当前标签dom节点 */}
+            <i ref={(icon)=>{
+              this.spinIcon = icon
+            }} className="iconfont spin">&#xe637;</i>
+              换一批
+            </SearchInfoSwitch>
           </SearchInfoTitle>
           <SearchInfoList>
             {pagelist}
@@ -48,7 +54,7 @@ class Header extends Component {
     }
   }
   render(){
-    const {focused, handleInputFocused, handleInputBlur} = this.props;
+    const {focused, handleInputFocused, handleInputBlur, list} = this.props;
     return (
       <HeaderWrapper>
       <Logo></Logo>
@@ -64,11 +70,11 @@ class Header extends Component {
           classNames="slide">
             <NavSearch
             className={focused ? 'focused':''}
-            onFocus={handleInputFocused}
+            onFocus={()=>handleInputFocused(list)}
             onBlur={handleInputBlur}
             ></NavSearch>
           </CSSTransition>
-          <i className={focused ? 'focused iconfont':'iconfont'}>&#xe637;</i>
+          <i className={focused ? 'focused iconfont zoom':'iconfont zoom'}>&#xe637;</i>
           {/* 此处为判断搜索框聚焦时显示，不聚集不显示 */}
           {this.getListArea()}
         </SearchWrapper>
@@ -100,11 +106,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     //将操作store中数据的方法handleInputFocused写在此处
-    handleInputFocused() {
+    handleInputFocused(list) {
       //写一个action类型 方便在reducer文件中做判断
       //在聚焦时做一个ajax的数据请求，现在使用redux-thunk来代替集中在中间件action.js中做ajax请求
       //次数在搜索框聚焦时，可以派发一个由actionCreators创建的获取异步数据的action
-      dispatch(actionCreators.getList());//此处的getList()方法在actionCreators.js文件中创建
+      if(list.size === 0){//此处的list.size表示如果===0则请求数据，避免无意义的请求发送
+        dispatch(actionCreators.getList());//此处的getList()方法在actionCreators.js文件中创建
+      }
       const action = actionCreators.searchFocus();
       dispatch(action);
     },
@@ -120,7 +128,14 @@ const mapDispatchToProps = (dispatch) => {
       const action = actionCreators.mouseLeave();
       dispatch(action);
     },
-    handleChangePage(page,totalPage){
+    handleChangePage(page,totalPage,spinIcon){
+      let origianAngle = spinIcon.style.transform.replace(/[^1-9]/ig,'');
+      if(origianAngle){
+        origianAngle = parseInt(origianAngle,10)
+      }else{
+        origianAngle = 0;
+      }
+      spinIcon.style.transform='rotate('+(origianAngle+360)+'deg)'
       if(page<totalPage){
         dispatch(actionCreators.changePage(page+1));
       }else{
