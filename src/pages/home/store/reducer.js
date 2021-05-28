@@ -1,0 +1,168 @@
+//引入immutable.je防止store中的state值无意间被改动而无法定位
+import { fromJS } from 'immutable';
+//第二步：把reducer的值传给store.js中的createStore
+const defaultState = fromJS({ //引入fromJS 可以将js对象转化为immutable对象 
+  topicList:[
+    {
+      id:1,
+      title:'社会热点',
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fs13.sinaimg.cn%2Fbmiddle%2F4d049168cc5e11e7fb13c&refer=http%3A%2F%2Fs13.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624758720&t=9cc6b0f10d16594b2c29b5b81421b555',
+    },
+    {
+      id:2,
+      title:'手绘',
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn10%2F480%2Fw640h640%2F20180928%2F1176-hhuhisn3781516.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624760636&t=baea277d5e9b6caa2a019a470bbc8ff0',
+    },{
+      id:3,
+      title:'简书电影',
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn09%2F480%2Fw640h640%2F20181009%2Faa1b-hkrzvkw2987821.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624760649&t=f63ba9cee10d7db98b632d156cf7dcf2',
+    },{
+      id:4,
+      title:'读书',
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.zhimg.com%2F50%2Fv2-9a03a08bf2b76dae77128115ffdff21f_hd.jpg&refer=http%3A%2F%2Fpic2.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624760658&t=55730263e06f0e68cfbe16bef271615f',
+    },{
+      id:5,
+      title:'摄影',
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic3.zhimg.com%2F50%2Fv2-ac1e459be8659904a5dc2799a9c07054_hd.jpg&refer=http%3A%2F%2Fpic3.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624760679&t=e263733214f0e818586465e8426a3d56',
+    },{
+      id:6,
+      title:'手绘',
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbqshuo.oss-cn-shenzhen.aliyuncs.com%2F1811ba11c79f41debac7279672d19a22.jpg&refer=http%3A%2F%2Fbqshuo.oss-cn-shenzhen.aliyuncs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624774001&t=e3af81960bd1310dfd92aba0c3f39eff',
+    },{
+      id:7,
+      title:'旅行·在路上',
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.biaobaiju.com%2Fuploads%2F20181021%2F13%2F1540100397-FUunxhHORN.jpeg&refer=http%3A%2F%2Fimage.biaobaiju.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624774001&t=2ff65410bee4aef03bc47a83fd8475e5',
+    },{
+      id:8,
+      title:'历史',
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F11124381723%2F1000.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624774001&t=7c50eac4ec93a29453609c16d107ad8a',
+    },{
+      id:9,
+      title:'手绘',
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.zhimg.com%2F50%2Fv2-5dd840db277633882b3a52575c24ded4_hd.jpg&refer=http%3A%2F%2Fpic1.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624774001&t=3f35a3fad3297807b020e5f39bd5912c',
+    },{
+      id:10,
+      title:'手绘',
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinakd10120%2F440%2Fw640h600%2F20200404%2F3752-irtymmw0827424.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624774001&t=4f2abc4024c5a9a15a3e3d19bac27cb5',
+    },
+    
+  ],
+  articleList:[
+    {
+      id:1,
+      title:'朋友圈中，层次越低的人，越喜欢用这3种“头像”来显摆自己',
+      desc:'社交平台拉近了人与人的距离，因此越来越多的人依赖于社交平台来进行沟通。 但是，社交平台在提高人们的沟通效率的同时，它也成为了更多人的情绪宣泄场。...',
+      imgUrl:'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/cb8065380cd791230f4870a5ac345982b3b780b3.jpg',
+    },{
+      id:2,
+      title:'继女',
+      desc:'我今年70岁，退休工资每个月6000元，带着50万存款住进儿子家被儿媳妇嫌弃。我搬回老家，继女的一句话让我热泪盈眶。 我是个退休教师，我的老伴生...',
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi0.sinaimg.cn%2Fent%2F2010%2F0814%2F2010814104625.jpg&refer=http%3A%2F%2Fi0.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624776626&t=2a95d76edbb47c073e535b02eab927b7',
+    },{
+      id:3,
+      title:'终于还是出事了',
+      desc:'我姑家的孩子又突然犯病，拿着剪刀捅伤了好几个人，其中还有个七八十岁的老年人。出事后，孩子那没用的爹直接带着我弟跑来了我家，犯了事不留下来和受...',
+      imgUrl:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3768986255,1243616948&fm=224&gp=0.jpg',
+    },{
+      id:4,
+      title:'财富自由｜这喜人的一片红。',
+      desc:'今天这波行情，怕是想浮亏都不容易吧？ 我反正今天终于感觉压在心上许久的五指山总算松动了一下，可喜可贺。 不过呢，要说距离年前全部浮盈回归，还是有...',
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Ffile.mtchome.com%2Fp%2F2015%2F01-05%2F8ee9c0482f5d1622f396e1bf9bb3c2fa.jpg&refer=http%3A%2F%2Ffile.mtchome.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624776578&t=de581e22aa55411009ba01aae035131a',
+    },{
+      id:5,
+      title:'怀孕的感觉是什么',
+      desc:'一转眼认识小狐狸也有半年多了，说实话，心里挺美。 这半年以来，除了小狐狸不让我动手动脚以外，你别说还挺暖心的。 昨天晚上，我犹豫了半天，还是没憋...',
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fatt.191.cn%2Fattachment%2Fphoto%2FMon_1303%2F14833_3a231364375349e3ecb8660d596c2.jpg&refer=http%3A%2F%2Fatt.191.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624776578&t=89d5bfae1ee8e3a5c3b0e952e771d4b8',
+      like:329,
+      comments:559,
+      hot:16.1,
+    },
+  ],
+  recommendList:[
+    {
+      id:1,
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fhbimg.huabanimg.com%2F85efa7f6fdb66c5aaa86e9d1bb8cc7936f7f3dbf16ac0-dRHTFk_fw658&refer=http%3A%2F%2Fhbimg.huabanimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624781687&t=e11c6a5bac1cfd56b570746fd33d387e',
+    },{
+      id:2,
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbpic.588ku.com%2Fback_pic%2F05%2F31%2F91%2F115a1cdebebb277.jpg%21r850%2Ffw%2F800&refer=http%3A%2F%2Fbpic.588ku.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624781706&t=6ca7bcc9d04c5fdb20f22462c2822d24',
+    },{
+      id:3,
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F473a8ba1eb05ec73db757acefbcd202d253d2598dd918-Iu8d2x_fw658&refer=http%3A%2F%2Fhbimg.b0.upaiyun.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624781716&t=bf5748e4740786e742351687b6976c48',
+    },{
+      id:4,
+      imageUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Fdbb2aab261b5d2b263321c44d7565dee30aa2d4b7e8a9-hb6Bn3_fw658&refer=http%3A%2F%2Fhbimg.b0.upaiyun.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624781729&t=e8b52d1fc84859765a7651c907264007',
+    }
+  ],
+  writerList:[
+    {
+      id:1,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201407%2F26%2F20140726134027_UGnYt.thumb.700_0.jpeg&refer=http%3A%2F%2Fcdn.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=9e42996f0c155dffa9e1c80c44dfc897',
+      writerName:'茶点故事',
+      desc:'写了744.8k字 · 15.8k喜欢',
+    },{
+      id:2,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201312%2F20%2F20131220165207_kjkFt.thumb.700_0.gif&refer=http%3A%2F%2Fimg5.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=db31333c2373414c4f674711d1efcd49',
+      writerName:'阿特otter',
+      desc:'写了293.9k字 · 3.4k喜欢',
+    },{
+      id:3,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201508%2F16%2F20150816171313_5rfRH.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=b272ddd9799c3938cc76874db75941b1',
+      writerName:'木灵清',
+      desc:'写了147.3k字 · 590喜欢',
+    },{
+      id:4,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201411%2F01%2F20141101230647_Sz5YT.thumb.700_0.jpeg&refer=http%3A%2F%2Fcdn.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=93848f17e68d44b374716620ca9abde9',
+      writerName:'念远怀人',
+      desc:'写了254.1k字 · 4.7k喜欢',
+    },{
+      id:5,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201407%2F26%2F20140726134027_UGnYt.thumb.700_0.jpeg&refer=http%3A%2F%2Fcdn.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=9e42996f0c155dffa9e1c80c44dfc897',
+      writerName:'茶点故事',
+      desc:'写了744.8k字 · 15.8k喜欢',
+    },{
+      id:6,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201312%2F20%2F20131220165207_kjkFt.thumb.700_0.gif&refer=http%3A%2F%2Fimg5.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=db31333c2373414c4f674711d1efcd49',
+      writerName:'阿特otter',
+      desc:'写了293.9k字 · 3.4k喜欢',
+    },{
+      id:7,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201508%2F16%2F20150816171313_5rfRH.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=b272ddd9799c3938cc76874db75941b1',
+      writerName:'木灵清',
+      desc:'写了147.3k字 · 590喜欢',
+    },{
+      id:8,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201411%2F01%2F20141101230647_Sz5YT.thumb.700_0.jpeg&refer=http%3A%2F%2Fcdn.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=93848f17e68d44b374716620ca9abde9',
+      writerName:'念远怀人',
+      desc:'写了254.1k字 · 4.7k喜欢',
+    },{
+      id:9,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201407%2F26%2F20140726134027_UGnYt.thumb.700_0.jpeg&refer=http%3A%2F%2Fcdn.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=9e42996f0c155dffa9e1c80c44dfc897',
+      writerName:'茶点故事',
+      desc:'写了744.8k字 · 15.8k喜欢',
+    },{
+      id:10,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201312%2F20%2F20131220165207_kjkFt.thumb.700_0.gif&refer=http%3A%2F%2Fimg5.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=db31333c2373414c4f674711d1efcd49',
+      writerName:'阿特otter',
+      desc:'写了293.9k字 · 3.4k喜欢',
+    },{
+      id:11,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201508%2F16%2F20150816171313_5rfRH.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=b272ddd9799c3938cc76874db75941b1',
+      writerName:'木灵清',
+      desc:'写了147.3k字 · 590喜欢',
+    },{
+      id:12,
+      imgUrl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201411%2F01%2F20141101230647_Sz5YT.thumb.700_0.jpeg&refer=http%3A%2F%2Fcdn.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624783792&t=93848f17e68d44b374716620ca9abde9',
+      writerName:'念远怀人',
+      desc:'写了254.1k字 · 4.7k喜欢',
+    }
+  ]
+});
+//reducer文件导出的内容是一个纯函数（给一个固定的输入就一定会有一定的输出，同时不会有副作用）
+export default ( state = defaultState, action ) => {//此处的defaultState是一个默认值
+  //根据从组件中获取到的操作类型作判断并返回出相对应的操作
+  switch(action.type){
+    
+    default:
+      return state;
+  }
+}
