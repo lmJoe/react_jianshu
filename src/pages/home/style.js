@@ -157,3 +157,30 @@ export const WriterRecommed = styled.div`
     color: #969696;
   }
 `
+export const LoadMore = styled.div`
+  width:100%;
+  height:40px;
+  line-height:40px;
+  text-align:center;
+  background:#a5a5a5;
+  border-radius:20px;
+  color:#fff;
+  margin:30px 0;
+  cursor:pointer;
+  font-size:14px;
+`
+export const BackTop = styled.div`
+  position:fixed;
+  width:60px;
+  height:60px;
+  line-height:60px;
+  text-align:center;
+  border:1px solid #ccc;
+  font-size:12px;
+  color:#333;
+  background:#fff;
+  transition: .1s ease-in;
+  cursor: pointer;
+  right:30px;
+  bottom:30px;
+`
