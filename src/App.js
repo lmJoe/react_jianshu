@@ -5,22 +5,22 @@ import Header from './common/header/index.js'
 import Home from './pages/home/index.js'
 import Detail from './pages/detail/index.js'
 import { BrowserRouter,Route } from 'react-router-dom'
-import store from './store'
+import store from './store';
+import Login from './pages/login/index.js';
 function App() {
   return (
     //<Provider store={store}>  此处的意思为使Provider内部所有组件都有能力使用store里的数据
     <Provider store={store}>
-      <div id="App">
-        <Header>
-        </Header>
-        <BrowserRouter>
-        {/* 此处路由为根目录显示首页 */}
-          <div>
-            <Route path='/' exact component={Home}></Route>
-            <Route path='/detail' exact component={Detail}></Route>
-          </div>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+      {/* 此处路由为根目录显示首页 */}
+        <div>
+        <Header />
+        <Route path='/' exact component={Home}></Route>
+        <Route path='/login' exact component={Login}></Route>
+        {/* <Route path='/detail' exact component={Detail}></Route> */}
+        <Route path='/detail/:id' exact component={Detail}></Route>
+        </div>
+      </BrowserRouter>
     </Provider>
     
   );

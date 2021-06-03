@@ -35,6 +35,7 @@ export default ( state = defaultState, action ) => {//此处的defaultState是�
     case constants.CHANGE_HOME_DATA:
       return changeHomeData(state,action)
     case constants.ADD_HOME_LIST:
+      debugger
       return addArticleList(state,action)
     case constants.TOGGLE_SCROLL_TOP:
       return state.set('showScroll',action.show)

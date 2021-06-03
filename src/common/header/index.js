@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
   HeaderWrapper,
@@ -16,7 +16,8 @@ import {
   SearchInfoList} from './style.js'
 import { CSSTransition } from 'react-transition-group';
 import { actionCreators }  from './store/index';//将当前组件下store引入唯一路径index.js  目的在于引入actionCreators中的操作类型
-class Header extends Component {
+import { Link } from 'react-router-dom';
+class Header extends PureComponent {
   getListArea = () => {
     const { focused, list, page, mouseIn, totalPage, handleMouseEnter, handleMouseLeave, handleChangePage} = this.props;
     //此时的list为一个immutable对象，不支持中括号[]
@@ -57,11 +58,15 @@ class Header extends Component {
     const {focused, handleInputFocused, handleInputBlur, list} = this.props;
     return (
       <HeaderWrapper>
-      <Logo></Logo>
+      <Link to='/'>
+        <Logo />
+      </Link>
       <Nav>
         <Navitem className="left active">首页</Navitem>
         <Navitem className="left">下载</Navitem>
-        <Navitem className="right">登录</Navitem>
+        <Link to='/login'>
+          <Navitem className="right">登录</Navitem>
+        </Link>
         <Navitem className="right"><i className="iconfont">&#xe636;</i></Navitem>
         <SearchWrapper>
           <CSSTransition
