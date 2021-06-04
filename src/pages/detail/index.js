@@ -1,5 +1,6 @@
 import React,{ PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { HomeWrapper, Header, Content } from './style';
 import {actionCreators} from './store';
 class Detail extends PureComponent {
@@ -27,4 +28,5 @@ const mapState = (state) => ({
   title:state.getIn(['detail','title']),
   content:state.getIn(['detail','content']),
 })
-export default connect(mapState,mapDispatch)(Detail);
+//此处withRouter使用意义为让detail有能力获取到withRouter中所有的参数和内容
+export default connect(mapState,mapDispatch)(withRouter(Detail));

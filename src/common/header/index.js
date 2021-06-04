@@ -16,6 +16,7 @@ import {
   SearchInfoList} from './style.js'
 import { CSSTransition } from 'react-transition-group';
 import { actionCreators }  from './store/index';//将当前组件下store引入唯一路径index.js  目的在于引入actionCreators中的操作类型
+import { actionCreators as loginActionCreators}  from '../../pages/login/store';
 import { Link } from 'react-router-dom';
 class Header extends PureComponent {
   getListArea = () => {
@@ -55,7 +56,7 @@ class Header extends PureComponent {
     }
   }
   render(){
-    const {focused, handleInputFocused, handleInputBlur, list} = this.props;
+    const {focused, handleInputFocused, handleInputBlur, list,login,loginOut} = this.props;
     return (
       <HeaderWrapper>
       <Link to='/'>
@@ -64,9 +65,10 @@ class Header extends PureComponent {
       <Nav>
         <Navitem className="left active">首页</Navitem>
         <Navitem className="left">下载</Navitem>
-        <Link to='/login'>
-          <Navitem className="right">登录</Navitem>
-        </Link>
+        {
+          login?<Navitem onClick={loginOut} className="right">退出</Navitem>:
+          <Link to='/login'><Navitem className="right">登录</Navitem></Link>
+        }
         <Navitem className="right"><i className="iconfont">&#xe636;</i></Navitem>
         <SearchWrapper>
           <CSSTransition
@@ -85,7 +87,9 @@ class Header extends PureComponent {
         </SearchWrapper>
       </Nav>
       <Addition>
-        <Button className="writting"><i className="iconfont">&#xe6e5;</i>写文章</Button>
+        <Link to="/write">
+          <Button className="writting"><i className="iconfont">&#xe6e5;</i>写文章</Button>
+        </Link>
         <Button className="reg">注册</Button>
       </Addition>
     </HeaderWrapper>
@@ -105,6 +109,7 @@ const mapStateToProps = (state) => {
     page:state.getIn(['header','page']),
     mouseIn:state.getIn(['header','mouseIn']),
     totalPage:state.getIn(['header','totalPage']),
+    login:state.getIn(['login','login']),
 
   }
 }
@@ -146,6 +151,9 @@ const mapDispatchToProps = (dispatch) => {
       }else{
         dispatch(actionCreators.changePage(1));
       }
+    },
+    loginOut(){
+      dispatch(loginActionCreators.loginOut())
     }
   }
 }
